@@ -1,0 +1,15 @@
+{
+  "level": "info",
+  "encoding": "console",
+  "outputPaths": ["stdout", "./logs"],
+  "errorOutputPaths": ["stderr"],
+  "encoderConfig": {
+    "messageKey": "message",
+    "callerKey": "caller",
+    "callerEncoder": "short",
+    "levelKey": "level",
+    "levelEncoder": "capital",
+    "timeKey": "time",
+    "timeEncoder": "ISO8601"
+  }
+}

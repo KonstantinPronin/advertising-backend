@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  database:
+    image: "mongo:4.4.1"
+    hostname: "database"
+    environment:
+      MONGO_INITDB_DATABASE: "avito"
+      MONGO_INITDB_ROOT_USERNAME: "mongo"
+      MONGO_INITDB_ROOT_PASSWORD: "mongo"
+    volumes:
+      - advertising-backend-db:/data/db
+
+  application:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+
+volumes:
+  advertising-backend-db:

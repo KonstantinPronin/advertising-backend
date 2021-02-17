@@ -1,0 +1,152 @@
+openapi: 3.0.0
+info:
+  title: Avito advertising
+  description: API документация
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: adv
+    description: Advertisement
+
+paths:
+  /adv:
+    post:
+      tags:
+        - adv
+      summary: Add new advertisement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Advertisement'
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: '602d8e3b9d80ea5032a1243a'
+        400:
+          description: Wrong body format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrResponse'
+    get:
+      tags:
+        - adv
+      summary: Get advertisement
+      parameters:
+        - name: page
+          description: Page number
+          in: query
+          schema:
+            type: number
+            example: "?page=1"
+        - name: order
+          description: 'Sort by specified field. Default - by price.'
+          in: query
+          schema:
+            type: number
+            example: "?order=date"
+        - name: desc
+          description: 'Descending sort. Default - false'
+          in: query
+          schema:
+            type: boolean
+            example: "?desc=true"
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Advertisement'
+        400:
+          description: Wrong request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrResponse'
+  /adv/{id}:
+    get:
+      tags:
+        - adv
+      summary: Get advertisement
+      parameters:
+        - name: id
+          description: Advertisement id
+          required: true
+          in: path
+          schema:
+            type: string
+            example: '602d8e3b9d80ea5032a1243a'
+        - name: fields
+          description: Additional fields
+          in: query
+          schema:
+            type: array
+            items:
+              type: string
+            example: "?fields=imgs&fields=desc"
+      responses:
+        200:
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Advertisement'
+        400:
+          description: Wrong request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrResponse'
+        404:
+          description: Advertisement not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrResponse'
+
+components:
+  schemas:
+    ErrResponse:
+      type: object
+      properties:
+        messsage:
+          type: string
+          example: "error"
+    Advertisement:
+      type: object
+      required:
+        - name
+        - images
+      properties:
+        name:
+          type: string
+          example: 'New advertisement'
+        description:
+          type: string
+          example: 'New test advertisement example'
+        price:
+          type: number
+          format: double
+          example: '500.00'
+        images:
+          type: array
+          items:
+            type: string
+            example: 'https://politeka.net/images/2019/03/04/mITwhaULMNXI35xuuxDIAfPcrKCEWmue.jpg'
+        created:
+          type: string
+          format: date
+          example: '2021-02-17T21:44:27Z'

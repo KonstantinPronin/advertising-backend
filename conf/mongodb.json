@@ -1,0 +1,4 @@
+{
+  "uri" : "mongodb://mongo:mongo@database:27017",
+  "database" : "avito"
+}
