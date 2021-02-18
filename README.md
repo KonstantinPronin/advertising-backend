@@ -14,4 +14,4 @@
 
 #### References:
 + [Origin task](https://github.com/avito-tech/adv-backend-trainee-assignment)  
-+ [Api documentation](./doc/swagger.yaml)
++ [Api documentation](./doc/openapi.yaml)
